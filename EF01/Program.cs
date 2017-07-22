@@ -7,10 +7,26 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            QueryDataUsingLike();
+            ObjectIdentity();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void ObjectIdentity()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = log => Console.WriteLine(log);
+
+                var emp1 = db.Employee.FirstOrDefault(a => a.Id == 1);
+                var emp2 = db.Employee.FirstOrDefault(a => a.Id == 1);
+
+                if (emp1 == emp2)
+                {
+                    Console.WriteLine("is same");
+                }
+            }
         }
 
         private static void InsertData()
@@ -58,5 +74,16 @@ namespace EF01
             }
         }
 
+        private static void UpdateData()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = log => Console.WriteLine(log);
+
+                var emp = db.Employee.Where(a => a.Id == 1).FirstOrDefault();
+                emp.Name = "AA3";
+                db.SaveChanges();
+            }
+        }
     }
 }
