@@ -9,10 +9,40 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            UpdateRowversionData();
+            Exception();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void Exception()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = log => Console.WriteLine(log);
+
+                var dep1 = new Departement { Id = 1, Name = "AA" };
+                var dep2 = new Departement { Id = 2, Name = "BB" };
+
+                db.Departement.Add(dep1);
+                db.Departement.Add(dep2);
+
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    Console.WriteLine($"concurrency error , object id : {((Departement)ex.Entries.FirstOrDefault().Entity).Id}");
+                }
+                catch (DbUpdateException ex)
+                {
+                    Console.WriteLine($"insert records fail, message {ex.Message}, inner message {ex.InnerException?.InnerException?.Message}");
+                }
+
+                Console.WriteLine("done");
+                Console.ReadLine();
+            }
         }
 
         private static void UpdateRowversionData()
@@ -83,7 +113,7 @@ namespace EF01
 
         public static IQueryable<T> GetPager<T>(IQueryable<T> source, int pageSize, int page)
         {
-            return source.Skip(pageSize * page).Take(pageSize); 
+            return source.Skip(pageSize * page).Take(pageSize);
         }
 
         private static void Refresh()
