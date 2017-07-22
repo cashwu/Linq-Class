@@ -9,10 +9,24 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            ListChangeState();
+            ProperytValue();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void ProperytValue()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = Console.WriteLine;
+
+                var emp = db.Employee.FirstOrDefault(a => a.Id == 1);
+                emp.Name = "AA11";
+
+                Console.WriteLine($"OriginalValue :: {db.Entry(emp).Property(a => a.Name).OriginalValue}, " +
+                                  $"CurrentValue :: {db.Entry(emp).Property(a => a.Name).CurrentValue}");
+            }
         }
 
         private static void ListChangeState()
