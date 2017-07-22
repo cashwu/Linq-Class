@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 
 namespace EF01
@@ -7,10 +9,26 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            ObjectIdentity();
+            Refresh();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void Refresh()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = log => Console.WriteLine(log);
+
+                var emp = db.Employee.FirstOrDefault(a => a.Id == 1);
+                Console.WriteLine($"Id :: {emp.Id}, Name :: {emp.Name}");
+                Console.ReadLine();
+
+                var objContext = db as IObjectContextAdapter;
+                objContext.ObjectContext.Refresh(RefreshMode.StoreWins, emp);
+                Console.WriteLine($"Id :: {emp.Id}, Name :: {emp.Name}");
+            }
         }
 
         private static void ObjectIdentity()
@@ -33,9 +51,9 @@ namespace EF01
         {
             using (var db = new MyEFEntities())
             {
-                var employee1 = new Employee {Name = "AA"};
-                var employee2 = new Employee {Name = "BB"};
-                var employee3 = new Employee {Name = "CC"};
+                var employee1 = new Employee { Name = "AA" };
+                var employee2 = new Employee { Name = "BB" };
+                var employee3 = new Employee { Name = "CC" };
 
                 db.Employee.Add(employee1);
                 db.Employee.Add(employee2);
