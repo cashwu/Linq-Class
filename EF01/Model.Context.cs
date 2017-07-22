@@ -26,5 +26,6 @@ namespace EF01
         }
     
         public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<Departement> Departement { get; set; }
     }
 }

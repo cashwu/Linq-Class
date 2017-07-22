@@ -9,10 +9,63 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            Pager();
+            UpdateRowversionData();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void UpdateRowversionData()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = Console.WriteLine;
+
+                var dep = db.Departement.FirstOrDefault(a => a.Id == 1);
+
+                Console.ReadLine();
+
+                dep.Name = "AA11";
+                db.SaveChanges();
+
+                Console.WriteLine($"Id :: {dep.Id}, Name :: {dep.Name}");
+            }
+        }
+
+        private static void InsertRowversionData()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = log => Console.WriteLine(log);
+
+                var dep1 = new Departement { Id = 1, Name = "AA" };
+                var dep2 = new Departement { Id = 2, Name = "BB" };
+
+                db.Departement.Add(dep1);
+                db.Departement.Add(dep2);
+
+                db.SaveChanges();
+
+                Console.WriteLine("done");
+                Console.ReadLine();
+            }
+        }
+
+        private static void Fixed()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = log => Console.WriteLine(log);
+
+                var emp = db.Employee.FirstOrDefault(a => a.Id == 1);
+
+                Console.ReadLine();
+
+                emp.Name = "AA11";
+                db.SaveChanges();
+
+                Console.WriteLine($"Id :: {emp.Id}, Name :: {emp.Name}");
+            }
         }
 
         private static void Pager()
