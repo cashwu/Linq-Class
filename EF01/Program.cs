@@ -1,15 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EF01
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
+            using (var db = new MyEFEntities())
+            {
+                var employee1 = new Employee { Name = "AA" };
+                var employee2 = new Employee { Name = "BB" };
+                var employee3 = new Employee { Name = "CC" };
+
+                db.Employee.Add(employee1);
+                db.Employee.Add(employee2);
+                db.Employee.Add(employee3);
+
+                db.SaveChanges();
+
+                Console.WriteLine("done");
+                Console.ReadLine();
+            }
         }
     }
 }
