@@ -9,10 +9,28 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            Refresh();
+            Pager();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void Pager()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = Console.WriteLine;
+
+                foreach (var item in GetPager(db.Employee.OrderBy(a => a.Id), 2, 1))
+                {
+                    Console.WriteLine($"Id :: {item.Id}, Name :: {item.Name}");
+                }
+            }
+        }
+
+        public static IQueryable<T> GetPager<T>(IQueryable<T> source, int pageSize, int page)
+        {
+            return source.Skip(pageSize * page).Take(pageSize); 
         }
 
         private static void Refresh()
@@ -22,6 +40,10 @@ namespace EF01
                 db.Database.Log = log => Console.WriteLine(log);
 
                 var emp = db.Employee.FirstOrDefault(a => a.Id == 1);
+                Console.WriteLine($"Id :: {emp.Id}, Name :: {emp.Name}");
+                Console.ReadLine();
+
+                emp = db.Employee.FirstOrDefault(a => a.Id == 1);
                 Console.WriteLine($"Id :: {emp.Id}, Name :: {emp.Name}");
                 Console.ReadLine();
 
