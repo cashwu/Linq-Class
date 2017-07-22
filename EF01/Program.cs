@@ -9,10 +9,26 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            Exception();
+            ListChangeState();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void ListChangeState()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = Console.WriteLine;
+
+                var emp = db.Employee.FirstOrDefault(a => a.Id == 1);
+                emp.Name = "AA11";
+
+                foreach (var item in db.ChangeTracker.Entries<Employee>())
+                {
+                    Console.WriteLine($"Id :: {item.Entity.Id}, State :: {item.State}");
+                }
+            }
         }
 
         private static void Exception()
@@ -31,7 +47,7 @@ namespace EF01
                 {
                     db.SaveChanges();
                 }
-                catch (DbUpdateConcurrencyException ex)
+                catch (DbUpdateConcurrencyException ex) 
                 {
                     Console.WriteLine($"concurrency error , object id : {((Departement)ex.Entries.FirstOrDefault().Entity).Id}");
                 }
