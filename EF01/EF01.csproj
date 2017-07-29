@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeFirst.cs" />
     <Compile Include="DepartComplex.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
