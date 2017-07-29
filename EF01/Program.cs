@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
@@ -11,10 +12,30 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            InheritanceTable();
+            EmptyCodeFirst();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void EmptyCodeFirst()
+        {
+            CodeFirst cf = new CodeFirst();
+
+            var cm = new Customer
+            {
+                Name = "name",
+                Addresses = new List<Addresses>
+                {
+                    new Addresses
+                    {
+                        Address = "addr"
+                    }
+                }
+            };
+
+            cf.Customers.Add(cm);
+            cf.SaveChanges();
         }
 
         private static void InheritanceTable()
