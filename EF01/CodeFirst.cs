@@ -22,7 +22,7 @@ namespace EF01
         public CodeFirst()
             : base("name=CodeFirst")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<CodeFirst, Configuration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<CodeFirst, Configuration>());
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 
@@ -47,6 +47,7 @@ namespace EF01
         [StringLength(50)]
         public string Name { get; set; }
         public int Age { get; set; }
+        public int Sex { get; set; }
         public virtual ICollection<Addresses> Addresses { get; set; }
         public Customer()
         {
