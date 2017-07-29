@@ -44,6 +44,7 @@ namespace EF01
         public int ID { get; set; }
         [StringLength(50)]
         public string Name { get; set; }
+        public int Age { get; set; }
         public virtual ICollection<Addresses> Addresses { get; set; }
         public Customer()
         {
