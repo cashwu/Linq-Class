@@ -31,6 +31,7 @@ namespace EF01
         public virtual DbSet<Departement> Departement { get; set; }
         public virtual DbSet<Department2> Department2 { get; set; }
         public virtual DbSet<Employee2> Employee2 { get; set; }
+        public virtual DbSet<Person> Person { get; set; }
     
         public virtual ObjectResult<GetEmployee_Result> GetEmployee(Nullable<int> id)
         {

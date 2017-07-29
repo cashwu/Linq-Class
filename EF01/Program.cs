@@ -11,10 +11,31 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            ComplexType();
+            InheritanceTable();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void InheritanceTable()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = Console.WriteLine;
+                db.Person.Add(new Person
+                {
+                    Id = 1,
+                    Name = "p",
+                });
+
+                db.Person.Add(new Manager
+                {
+                    Id = 2,
+                    Name = "m"
+                });
+
+                db.SaveChanges();
+            }
         }
 
         private static void ComplexType()

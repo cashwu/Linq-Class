@@ -11,7 +11,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="None" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="Department2">
           <Key>
@@ -36,6 +36,14 @@
           <Property Name="DepartmentId" Type="int" Nullable="false" />
           <Property Name="Salary" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Type" Type="int" />
+        </EntityType>
         <Association Name="FK_Employee_Department">
           <End Role="Department2" Type="Self.Department2" Multiplicity="1" />
           <End Role="Employee2" Type="Self.Employee2" Multiplicity="*" />
@@ -56,6 +64,7 @@
           <EntitySet Name="Department2" EntityType="Self.Department2" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee2" EntityType="Self.Employee2" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Employee_Department" Association="Self.FK_Employee_Department">
             <End Role="Department2" EntitySet="Department2" />
             <End Role="Employee2" EntitySet="Employee2" />
@@ -82,9 +91,10 @@
             <End Role="Employee2" EntitySet="Employee2" />
           </AssociationSet>
           <FunctionImport Name="GetEmployee" ReturnType="Collection(MyEFModel.GetEmployee_Result)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
-        </EntityContainer>
+          <EntitySet Name="Person" EntityType="MyEFModel.Person" />
+          </EntityContainer>
         <EntityType Name="Departement">
           <Key>
             <PropertyRef Name="Id" />
@@ -130,6 +140,15 @@
           <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="Binary" Name="Version" MaxLength="8" FixedLength="true" ConcurrencyMode="Fixed" />
         </ComplexType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Manager" BaseType="MyEFModel.Person">
+          </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -181,7 +200,21 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="Person">
+            <EntityTypeMapping TypeName="IsTypeOf(MyEFModel.Person)">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(MyEFModel.Manager)">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <Condition ColumnName="Type" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
