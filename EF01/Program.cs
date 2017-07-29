@@ -10,10 +10,38 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            Local();
+            AddConnectData();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void AddConnectData()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = Console.WriteLine;
+
+                var dep = new Department2
+                {
+                    Id = 1,
+                    Name = "Marketing"
+                };
+
+                dep.Employee2.Add(new Employee2
+                {
+                    Name = "AA"
+                });
+
+                dep.Employee2.Add(new Employee2
+                {
+                    Name = "BB"
+                });
+
+                db.Department2.Add(dep);
+
+                db.SaveChanges();
+            }
         }
 
         private static void Local()
