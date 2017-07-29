@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -9,10 +10,25 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            AttachedWithFixException();
+            Local();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void Local()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = Console.WriteLine;
+                
+                db.Employee.Load();
+
+                foreach (var item in db.Employee.Local.Where(a => a.Id == 1))
+                {
+                    Console.WriteLine($"Id :: {item.Id}, Name :: {item.Name}");
+                }
+            }
         }
 
         private static void AttachedWithFixException()
