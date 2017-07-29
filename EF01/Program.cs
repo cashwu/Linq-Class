@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
@@ -10,10 +11,27 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            AddConnectData();
+            GetConnectData();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void GetConnectData()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = Console.WriteLine;
+
+                var result = from s in db.Department2
+                    where s.Employee2.Any(a => a.Name == "AA")
+                    select s;
+
+                foreach (var item in result)
+                {
+                    Console.WriteLine($"Id :: {item.Id}, Name :: {item.Name}");
+                }
+            }
         }
 
         private static void AddConnectData()
@@ -49,7 +67,7 @@ namespace EF01
             using (var db = new MyEFEntities())
             {
                 db.Database.Log = Console.WriteLine;
-                
+
                 db.Employee.Load();
 
                 foreach (var item in db.Employee.Local.Where(a => a.Id == 1))
@@ -149,7 +167,7 @@ namespace EF01
                 {
                     db.SaveChanges();
                 }
-                catch (DbUpdateConcurrencyException ex) 
+                catch (DbUpdateConcurrencyException ex)
                 {
                     Console.WriteLine($"concurrency error , object id : {((Departement)ex.Entries.FirstOrDefault().Entity).Id}");
                 }
