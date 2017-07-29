@@ -9,10 +9,36 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            Attached();
+            AttachedWithFixException();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void AttachedWithFixException()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = Console.WriteLine;
+
+                var item = new Employee
+                {
+                    Id = 1
+                };
+
+                db.Employee.Attach(item);
+                item.Name = "Cash";
+
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    Console.WriteLine($"concurrynct exception object id :" +
+                                      $" {((Employee)ex.Entries.FirstOrDefault().Entity).Id}");
+                }
+            }
         }
 
         private static void Attached()
