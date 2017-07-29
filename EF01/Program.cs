@@ -9,10 +9,28 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            ProperytValue();
+            Attached();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void Attached()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = Console.WriteLine;
+
+                var item = new Employee
+                {
+                    Id = 1
+                };
+
+                db.Employee.Attach(item);
+                item.Name = "Cash";
+
+                db.SaveChanges();
+            }
         }
 
         private static void ProperytValue()

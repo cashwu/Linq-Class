@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26711.1
+VisualStudioVersion = 15.0.26724.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF01", "EF01\EF01.csproj", "{971E1ABB-E59C-408F-8D1B-AEBC75BE44D7}"
 EndProject
@@ -21,5 +21,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DE71ADED-F32F-4EE0-A5D0-7B866B7191E0}
+	EndGlobalSection
+	GlobalSection(CodealikeProperties) = postSolution
+		SolutionGuid = de71aded-f32f-4ee0-a5d0-7b866b7191e0
 	EndGlobalSection
 EndGlobal
