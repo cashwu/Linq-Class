@@ -81,6 +81,10 @@
     <Compile Include="Migrations\201707290729141_AddSex.Designer.cs">
       <DependentUpon>201707290729141_AddSex.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707290747240_AddEmployeeCF.cs" />
+    <Compile Include="Migrations\201707290747240_AddEmployeeCF.Designer.cs">
+      <DependentUpon>201707290747240_AddEmployeeCF.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model.Context.cs">
       <AutoGen>True</AutoGen>
@@ -135,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707290729141_AddSex.resx">
       <DependentUpon>201707290729141_AddSex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707290747240_AddEmployeeCF.resx">
+      <DependentUpon>201707290747240_AddEmployeeCF.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

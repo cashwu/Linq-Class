@@ -32,6 +32,7 @@ namespace EF01
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Addresses> Addresses { get; set; }
+        public DbSet<EmployeeCF> EmployeeCF { get; set; }
     }
 
     //public class MyEntity
@@ -62,5 +63,20 @@ namespace EF01
         [StringLength(150), Index]
         public string Address { get; set; }
         public int CustomerID { get; set; }
+    }
+
+    public enum EmployeeRole
+    {
+        Normal,
+        Manager,
+        Developer
+    }
+    public class EmployeeCF
+    {
+        [Key]
+        public int ID { get; set; }
+        [StringLength(50)]
+        public string Name { get; set; }
+        public EmployeeRole Role { get; set; }
     }
 }
