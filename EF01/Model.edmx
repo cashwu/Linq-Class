@@ -13,6 +13,13 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
         </EntityType>
+        <EntityType Name="Department2">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
@@ -20,9 +27,36 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Employee2">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="DepartmentId" Type="int" Nullable="false" />
+          <Property Name="Salary" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <Association Name="FK_Employee_Department">
+          <End Role="Department2" Type="Self.Department2" Multiplicity="1" />
+          <End Role="Employee2" Type="Self.Employee2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department2">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee2">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="MyEFModelStoreContainer">
           <EntitySet Name="Departement" EntityType="Self.Departement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department2" EntityType="Self.Department2" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee2" EntityType="Self.Employee2" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_Department" Association="Self.FK_Employee_Department">
+            <End Role="Department2" EntitySet="Department2" />
+            <End Role="Employee2" EntitySet="Employee2" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -38,6 +72,12 @@
         <EntityContainer Name="MyEFEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Employee" EntityType="Self.Employee" />
           <EntitySet Name="Departement" EntityType="MyEFModel.Departement" />
+          <EntitySet Name="Department2" EntityType="MyEFModel.Department2" />
+          <EntitySet Name="Employee2" EntityType="MyEFModel.Employee2" />
+          <AssociationSet Name="FK_Employee_Department" Association="MyEFModel.FK_Employee_Department">
+            <End Role="Department2" EntitySet="Department2" />
+            <End Role="Employee2" EntitySet="Employee2" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Departement">
           <Key>
@@ -47,6 +87,36 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
         </EntityType>
+        <EntityType Name="Department2">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee2" Relationship="MyEFModel.FK_Employee_Department" FromRole="Department2" ToRole="Employee2" />
+        </EntityType>
+        <EntityType Name="Employee2">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" />
+          <Property Name="Salary" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Department2" Relationship="MyEFModel.FK_Employee_Department" FromRole="Employee2" ToRole="Department2" />
+        </EntityType>
+        <Association Name="FK_Employee_Department">
+          <End Type="MyEFModel.Department2" Role="Department2" Multiplicity="1" />
+          <End Type="MyEFModel.Employee2" Role="Employee2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department2">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee2">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -65,6 +135,24 @@
             <EntityTypeMapping TypeName="MyEFModel.Departement">
               <MappingFragment StoreEntitySet="Departement">
                 <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Department2">
+            <EntityTypeMapping TypeName="MyEFModel.Department2">
+              <MappingFragment StoreEntitySet="Department2">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee2">
+            <EntityTypeMapping TypeName="MyEFModel.Employee2">
+              <MappingFragment StoreEntitySet="Employee2">
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

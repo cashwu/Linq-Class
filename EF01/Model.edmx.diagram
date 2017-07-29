@@ -7,6 +7,9 @@
       <Diagram DiagramId="a066ba69a1d84e428be256a0af0a84b5" Name="Diagram1">
         <EntityTypeShape EntityType="MyEFModel.Employee" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyEFModel.Departement" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MyEFModel.Department2" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="MyEFModel.Employee2" Width="1.5" PointX="3" PointY="3.875" />
+        <AssociationConnector Association="MyEFModel.FK_Employee_Department" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
