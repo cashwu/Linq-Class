@@ -9,7 +9,7 @@ namespace EF01.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "EF01.CodeFirst";
         }
 

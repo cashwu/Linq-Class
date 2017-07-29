@@ -29,7 +29,7 @@ namespace EF01
                 {
                     new Addresses
                     {
-                        Address = "addr"
+                        Address = "addr2"
                     }
                 }
             };

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using EF01;
+using EF01.Migrations;
 
 namespace EF01
 {
@@ -21,6 +22,7 @@ namespace EF01
         public CodeFirst()
             : base("name=CodeFirst")
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<CodeFirst, Configuration>());
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 
