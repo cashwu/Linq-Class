@@ -48,6 +48,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="MyEFModelStoreContainer">
           <EntitySet Name="Departement" EntityType="Self.Departement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department2" EntityType="Self.Department2" Schema="dbo" store:Type="Tables" />
@@ -78,6 +81,9 @@
             <End Role="Department2" EntitySet="Department2" />
             <End Role="Employee2" EntitySet="Employee2" />
           </AssociationSet>
+          <FunctionImport Name="GetEmployee" ReturnType="Collection(MyEFModel.GetEmployee_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Departement">
           <Key>
@@ -117,6 +123,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GetEmployee_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -158,6 +168,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetEmployee" FunctionName="MyEFModel.Store.GetEmployee">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MyEFModel.GetEmployee_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

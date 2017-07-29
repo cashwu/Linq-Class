@@ -12,6 +12,8 @@ namespace EF01
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class MyEFEntities : DbContext
     {
@@ -29,5 +31,14 @@ namespace EF01
         public virtual DbSet<Departement> Departement { get; set; }
         public virtual DbSet<Department2> Department2 { get; set; }
         public virtual DbSet<Employee2> Employee2 { get; set; }
+    
+        public virtual ObjectResult<GetEmployee_Result> GetEmployee(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetEmployee_Result>("GetEmployee", idParameter);
+        }
     }
 }

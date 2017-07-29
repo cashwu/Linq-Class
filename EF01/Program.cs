@@ -11,10 +11,24 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            GetConnectData();
+            CallSp();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void CallSp()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Database.Log = Console.WriteLine;
+
+                var emp = db.GetEmployee(1);
+                foreach (var item in emp)
+                {
+                    Console.WriteLine($"Id :: {item.Id}, Name :: {item.Name}");
+                }
+            }
         }
 
         private static void GetConnectData()
