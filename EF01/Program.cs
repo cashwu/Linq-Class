@@ -11,10 +11,27 @@ namespace EF01
     {
         private static void Main(string[] args)
         {
-            CallSp();
+            ComplexType();
 
             Console.WriteLine("done");
             Console.ReadLine();
+        }
+
+        private static void ComplexType()
+        {
+            using (var db = new MyEFEntities())
+            {
+                db.Departement.Add(new Departement
+                {
+                    Id = 1,
+                    ComplexProperty = new DepartComplex
+                    {
+                        Name = "cc",
+                        Version = new byte[] {1}
+                    }
+                });
+
+            }
         }
 
         private static void CallSp()
@@ -171,11 +188,11 @@ namespace EF01
             {
                 db.Database.Log = log => Console.WriteLine(log);
 
-                var dep1 = new Departement { Id = 1, Name = "AA" };
-                var dep2 = new Departement { Id = 2, Name = "BB" };
+                //var dep1 = new Departement { Id = 1, Name = "AA" };
+                //var dep2 = new Departement { Id = 2, Name = "BB" };
 
-                db.Departement.Add(dep1);
-                db.Departement.Add(dep2);
+                //db.Departement.Add(dep1);
+                //db.Departement.Add(dep2);
 
                 try
                 {
@@ -205,10 +222,10 @@ namespace EF01
 
                 Console.ReadLine();
 
-                dep.Name = "AA11";
+                //dep.Name = "AA11";
                 db.SaveChanges();
 
-                Console.WriteLine($"Id :: {dep.Id}, Name :: {dep.Name}");
+                //Console.WriteLine($"Id :: {dep.Id}, Name :: {dep.Name}");
             }
         }
 
@@ -218,11 +235,11 @@ namespace EF01
             {
                 db.Database.Log = log => Console.WriteLine(log);
 
-                var dep1 = new Departement { Id = 1, Name = "AA" };
-                var dep2 = new Departement { Id = 2, Name = "BB" };
+                //var dep1 = new Departement { Id = 1, Name = "AA" };
+                //var dep2 = new Departement { Id = 2, Name = "BB" };
 
-                db.Departement.Add(dep1);
-                db.Departement.Add(dep2);
+                //db.Departement.Add(dep1);
+                //db.Departement.Add(dep2);
 
                 db.SaveChanges();
 

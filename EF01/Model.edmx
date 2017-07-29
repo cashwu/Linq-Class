@@ -11,7 +11,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="Version" Type="timestamp" StoreGeneratedPattern="None" />
         </EntityType>
         <EntityType Name="Department2">
           <Key>
@@ -90,8 +90,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Version" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" ConcurrencyMode="Fixed" />
+          <Property Name="ComplexProperty" Type="MyEFModel.DepartComplex" Nullable="false" />
         </EntityType>
         <EntityType Name="Department2">
           <Key>
@@ -127,6 +126,10 @@
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="DepartComplex">
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Binary" Name="Version" MaxLength="8" FixedLength="true" ConcurrencyMode="Fixed" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -144,9 +147,11 @@
           <EntitySetMapping Name="Departement">
             <EntityTypeMapping TypeName="MyEFModel.Departement">
               <MappingFragment StoreEntitySet="Departement">
-                <ScalarProperty Name="Version" ColumnName="Version" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ComplexProperty Name="ComplexProperty">
+                  <ScalarProperty Name="Version" ColumnName="Version" />
+                  <ScalarProperty Name="Name" ColumnName="Name" />
+                </ComplexProperty>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

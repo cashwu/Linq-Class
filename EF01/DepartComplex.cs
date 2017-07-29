@@ -10,18 +10,10 @@
 namespace EF01
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Departement
+    public partial class DepartComplex
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Departement()
-        {
-            this.ComplexProperty = new DepartComplex();
-        }
-    
-        public int Id { get; set; }
-    
-        public DepartComplex ComplexProperty { get; set; }
+        public string Name { get; set; }
+        public byte[] Version { get; set; }
     }
 }
